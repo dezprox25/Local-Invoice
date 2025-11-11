@@ -15,8 +15,21 @@ export interface Layer {
   remarks: string;
 }
 
+// Signature metadata stored temporarily during editing session
+export interface Signature {
+  id: string;
+  name: string;
+  src: string; // data URL for preview
+  type: string; // MIME type
+  size: number; // bytes
+  width: number;
+  height: number;
+}
+
 export interface InvoiceData {
   invoiceNumber: string;
+  /** Sales Order / S.No separate from invoice number */
+  soNumber: string;
   invoiceDate: string;
   dueDate: string;
   companyName: string;
@@ -30,7 +43,12 @@ export interface InvoiceData {
   ifscCode: string;
   signatoryName: string;
   signatoryRole: string;
+  /** Legacy single signature field (kept for backward compatibility) */
   signatureImage: string;
+  /** Up to 4 signatures uploaded during session */
+  signatures?: Signature[];
+  /** Name of the signature to display in preview */
+  selectedSignatureName?: string;
   layers: Layer[];
   /** Amount remaining to be paid */
   dueAmount: number;

@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { Plus, Upload } from "lucide-react";
-import { InvoiceData, Layer } from "@/types/invoice";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
+import { Plus } from "lucide-react";
+import { InvoiceData, Layer, Signature } from "@/types/invoice";
 import { LayerEditor } from "./LayerEditor";
 
 interface InvoiceEditorProps {
@@ -70,16 +71,41 @@ export const InvoiceEditor = ({
     onUpdateData({ [field]: isNaN(num) ? 0 : num } as Partial<InvoiceData>);
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onUpdateData({ signatureImage: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+  // Preload up to 4 preset signatures from public assets if none exist
+  const PRESET_SIGNATURES: Signature[] = [
+    { id: "pub-1", name: "Agnel", src: "/Agnel_Signature.png?v=2", type: "image/png", size: 0, width: 0, height: 0 },
+    { id: "pub-2", name: "Bharani", src: "/Bharani_signature.png?v=2", type: "image/png", size: 0, width: 0, height: 0 },
+    { id: "pub-3", name: "Dinesh", src: "/dinesh_signature.png?v=2", type: "image/png", size: 0, width: 0, height: 0 },
+    { id: "pub-4", name: "Mohan", src: "/Mohan_signature.png?v=2", type: "image/png", size: 0, width: 0, height: 0 },
+  ];
+
+  useEffect(() => {
+    if ((invoiceData.signatures?.length ?? 0) === 0) {
+      onUpdateData({ signatures: PRESET_SIGNATURES, selectedSignatureName: PRESET_SIGNATURES[0].name });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleSignatureNameChange = (id: string, name: string) => {
+    const prev = invoiceData.signatures ?? [];
+    const targetPrev = prev.find((s) => s.id === id);
+    const wasSelected = targetPrev && targetPrev.name === invoiceData.selectedSignatureName;
+    const trimmed = name.trim();
+    const safeName = trimmed.length > 0 ? trimmed : (targetPrev?.name ?? "Signature");
+    const updated = prev.map((s) => (s.id === id ? { ...s, name: safeName } : s));
+    const updates: Partial<InvoiceData> = { signatures: updated };
+    if (wasSelected) {
+      updates.selectedSignatureName = safeName;
+    }
+    onUpdateData(updates);
   };
+
+  const handleSelectedSignatureChange = (value: string) => {
+    // Treat explicit none selection as clearing the value
+    onUpdateData({ selectedSignatureName: value === "none" ? "" : value });
+  };
+
+  // Legacy single signature upload handler removed; using preset signatures
 
   const inputFields = [
     { id: "companyName", label: "Company Name", value: invoiceData.companyName, type: "text" },
@@ -88,6 +114,7 @@ export const InvoiceEditor = ({
     { id: "clientEmail", label: "Client Email", value: invoiceData.clientEmail, type: "email" },
     { id: "clientAddress", label: "Client Address", value: invoiceData.clientAddress, type: "text" },
     { id: "invoiceNumber", label: "Invoice Number", value: invoiceData.invoiceNumber, type: "text" },
+    { id: "soNumber", label: "SO Number", value: invoiceData.soNumber, type: "text" },
     { id: "invoiceDate", label: "Invoice Date", value: invoiceData.invoiceDate, type: "date" },
     { id: "dueDate", label: "Due Date", value: invoiceData.dueDate, type: "date" },
     { id: "bankName", label: "Bank Name", value: invoiceData.bankName, type: "text" },
@@ -166,41 +193,69 @@ export const InvoiceEditor = ({
       </Card>
 
       <Card className="p-6 bg-card border-none">
-        <h2 className="text-lg font-semibold mb-4 text-[#2A2A2A]">Signature Image</h2>
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
-            <Label htmlFor="signatureImage" className="text-[10px] font-bold text-[#2A2A2A] block mb-2">
-              Upload Signature
-            </Label>
-            <div className="flex items-center gap-2">
-              <Input
-                id="signatureImage"
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-              <Label
-                htmlFor="signatureImage"
-                className="flex items-center gap-2 px-4 py-2 bg-[#2A732D] text-white text-[10px] font-medium rounded-md cursor-pointer hover:bg-[#389B3C] transition-colors"
-              >
-                <Upload className="w-4 h-4" />
-                Choose File
+        <h2 className="text-lg font-semibold mb-4 text-[#2A2A2A]">Signatures</h2>
+        <div className="space-y-4">
+          <div className="flex items-center gap-4">
+            <div className="flex-1">
+              <Label className="text-[10px] font-bold text-[#2A2A2A] block mb-2">
+                Preset signatures are imported. Use the selector below.
               </Label>
-              <span className="text-[10px] text-[#2A2A2A]">
-                {invoiceData.signatureImage ? "Image uploaded" : "No file chosen"}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-[#2A2A2A]">
+                  {(invoiceData.signatures?.length ?? 0)}/4 available
+                </span>
+              </div>
             </div>
           </div>
-          {invoiceData.signatureImage && (
-            <div className="w-16 h-16 border border-dashed border-[#389B3C] rounded-md overflow-hidden">
-              <img
-                src={invoiceData.signatureImage}
-                alt="Signature"
-                className="w-full h-full object-contain"
-              />
+
+          {/* Signature thumbnails and naming */}
+          {invoiceData.signatures && invoiceData.signatures.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {invoiceData.signatures.map((sig) => (
+                <div key={sig.id} className="border border-dashed border-[#389B3C] rounded-md p-2">
+                  <div className="w-full h-16 md:h-20 overflow-hidden rounded">
+                    <img
+                      src={sig.src}
+                      alt={`${sig.name || 'Signature'} preview`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <Label htmlFor={`sig-name-${sig.id}`} className="text-[10px] font-bold text-[#2A2A2A] block mt-2">
+                    Signature Name
+                  </Label>
+                  <Input
+                    id={`sig-name-${sig.id}`}
+                    type="text"
+                    value={sig.name}
+                    onChange={(e) => handleSignatureNameChange(sig.id, e.target.value)}
+                    className="text-[10px] text-[#389B3C] font-medium"
+                  />
+                </div>
+              ))}
             </div>
           )}
+
+          {/* Selected signature dropdown */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="selected-signature" className="text-[10px] font-bold text-[#2A2A2A] block mb-2">
+                Selected Signature (shown in preview)
+              </Label>
+              <Select value={invoiceData.selectedSignatureName ?? ""} onValueChange={handleSelectedSignatureChange}>
+                <SelectTrigger id="selected-signature" className="h-8 w-full text-[10px]">
+                  <SelectValue placeholder="Choose signature" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None</SelectItem>
+                  {(invoiceData.signatures ?? []).map((sig) => (
+                    <SelectItem key={sig.id} value={sig.name}>
+                      {sig.name || `Signature`}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
       </Card>
 

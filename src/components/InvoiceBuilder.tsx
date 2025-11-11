@@ -5,6 +5,7 @@ import { InvoiceData, Layer } from "@/types/invoice";
 
 const initialData: InvoiceData = {
   invoiceNumber: "INV-2025-01",
+  soNumber: "SO-2025-01",
   invoiceDate: new Date().toISOString().split("T")[0],
   dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   companyName: "Dezprox Pvt Ltd",
@@ -19,6 +20,46 @@ const initialData: InvoiceData = {
   signatoryName: "N R Bharanidharan",
   signatoryRole: "Authorized Signatory",
   signatureImage: "",
+  // Theme signatures: imported via public paths; cache-busted to avoid stale images
+  signatures: [
+    {
+      id: "pub-1",
+      name: "Agnel",
+      src: "/Agnel_Signature.png?v=2",
+      type: "image/png",
+      size: 0,
+      width: 0,
+      height: 0,
+    },
+    {
+      id: "pub-2",
+      name: "Bharani",
+      src: "/Bharani_signature.png?v=2",
+      type: "image/png",
+      size: 0,
+      width: 0,
+      height: 0,
+    },
+    {
+      id: "pub-3",
+      name: "Dinesh",
+      src: "/dinesh_signature.png?v=2",
+      type: "image/png",
+      size: 0,
+      width: 0,
+      height: 0,
+    },
+    {
+      id: "pub-4",
+      name: "Mohan",
+      src: "/Mohan_signature.png?v=2",
+      type: "image/png",
+      size: 0,
+      width: 0,
+      height: 0,
+    },
+  ],
+  selectedSignatureName: "Agnel",
   layers: [
     {
       id: "1",
