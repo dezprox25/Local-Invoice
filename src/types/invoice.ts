@@ -33,10 +33,7 @@ export interface InvoiceData {
   invoiceDate: string;
   dueDate: string;
   companyName: string;
-  clientName: string;
-  clientPhone: string;
-  clientEmail: string;
-  clientAddress: string;
+  clientDetails: string;
   bankName: string;
   accountName: string;
   accountNumber: string;

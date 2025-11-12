@@ -2,7 +2,7 @@ import { useState } from "react";
 import { InvoiceEditor } from "./invoice/InvoiceEditor";
 import { InvoicePreview } from "./invoice/InvoicePreview";
 import { InvoiceData, Layer } from "@/types/invoice";
-  import { logout } from "@/lib/auth";
+import { logout } from "@/lib/auth";
 import { useNavigate } from "react-router-dom";
 
 const initialData: InvoiceData = {
@@ -11,14 +11,11 @@ const initialData: InvoiceData = {
   invoiceDate: new Date().toISOString().split("T")[0],
   dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   companyName: "Dezprox Pvt Ltd",
-  clientName: "LEV Labs",
-  clientPhone: "+91 9876543210",
-  clientEmail: "contact@levlabs.com",
-  clientAddress: "123 Business Street, City, State 12345",
-  bankName: "State Bank of India",
-  accountName: "Dezprox LLP",
-  accountNumber: "1234567890",
-  ifscCode: "SBIN0001234",
+  clientDetails: "LEV Labs\n+91 9876543210\ncontact@levlabs.com\n123 Business Street, City, State 12345",
+  bankName: "Kotak Mahindra Bank",
+  accountName: "N.R. BHARANIDHARAN",
+  accountNumber: "4146504477",
+  ifscCode: "KKBK0008775",
   signatoryName: "Agnel Joshua Raj",
   signatoryRole: "Authorized Signatory",
   signatureImage: "",
@@ -104,7 +101,7 @@ export const InvoiceBuilder = () => {
       subtotal: 0,
       remarks: ""
     };
-    
+
     const newLayers = [...invoiceData.layers, newLayer];
     setInvoiceData(prev => ({
       ...prev,
@@ -114,10 +111,10 @@ export const InvoiceBuilder = () => {
   };
 
   const updateLayer = (layerId: string, updates: Partial<Layer>) => {
-    const newLayers = invoiceData.layers.map(layer => 
+    const newLayers = invoiceData.layers.map(layer =>
       layer.id === layerId ? { ...layer, ...updates } : layer
     );
-    
+
     setInvoiceData(prev => ({
       ...prev,
       layers: newLayers,
@@ -144,7 +141,10 @@ export const InvoiceBuilder = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-foreground">Invoice Builder</h1>
-            <p className="text-sm text-muted-foreground">Layer-by-Layer Method</p>
+            <p className="text-sm text-muted-foreground">Kindly upload the invoice to the drive after creating it</p>
+            <p className="text-sm">invoice :<a className="text-green-500" target="_blank" href="https://drive.google.com/drive/folders/1gBqV4ZsNG1aOGbYy5L2tcwkI0Mdx3Y6Q?usp=sharing">Click here</a></p>
+            <p className="text-sm">Quotation : <a className="text-green-500" target="_blank" href="https://drive.google.com/drive/folders/1GkWg15vGdLUHPkdGPMq0duunr6_sYbZB?usp=sharing">Click here</a></p>
+
           </div>
           <button
             onClick={() => {
@@ -167,7 +167,7 @@ export const InvoiceBuilder = () => {
             onUpdateLayer={updateLayer}
             onDeleteLayer={deleteLayer}
           />
-          
+
           <InvoicePreview invoiceData={invoiceData} />
         </div>
       </div>

@@ -110,10 +110,6 @@ export const InvoiceEditor = ({
 
   const inputFields = [
     { id: "companyName", label: "Company Name", value: invoiceData.companyName, type: "text" },
-    { id: "clientName", label: "Client Name", value: invoiceData.clientName, type: "text" },
-    { id: "clientPhone", label: "Client Phone", value: invoiceData.clientPhone, type: "text" },
-    { id: "clientEmail", label: "Client Email", value: invoiceData.clientEmail, type: "email" },
-    { id: "clientAddress", label: "Client Address", value: invoiceData.clientAddress, type: "text" },
     { id: "invoiceNumber", label: "Invoice Number", value: invoiceData.invoiceNumber, type: "text" },
     { id: "soNumber", label: "SO Number", value: invoiceData.soNumber, type: "text" },
     { id: "invoiceDate", label: "Invoice Date", value: invoiceData.invoiceDate, type: "date" },
@@ -131,6 +127,21 @@ export const InvoiceEditor = ({
       <Card className="p-6 bg-card border-none">
         <h2 className="text-lg font-semibold mb-4 text-[#2A2A2A]">Invoice Details</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* New Textarea for client details */}
+          <div>
+            <Label htmlFor="clientDetails" className="text-[10px] font-bold text-[#2A2A2A]">
+              Client Details
+            </Label>
+            <Textarea
+              id="clientDetails"
+              value={invoiceData.clientDetails || ""}
+              onChange={(e) => handleInputChange("clientDetails", e.target.value)}
+              rows={5} // Adjust rows as needed
+              className="text-[10px] text-[#389B3C] font-medium"
+              placeholder="Enter client name, phone, email, and address..."
+            />
+          </div>
+          {/* Existing input fields (excluding client details) */}
           {inputFields.map((field) => (
             <div key={field.id}>
               <Label htmlFor={field.id} className="text-[10px] font-bold text-[#2A2A2A]">

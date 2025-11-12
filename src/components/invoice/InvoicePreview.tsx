@@ -99,7 +99,7 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
       </div>
 
       <div className="preview-sheet">
-        <Card id="invoice-preview" className="p-10 bg-card print:shadow-none border-none">
+        <div id="invoice-preview" className="p-10  bg-card print:shadow-none border-none">
           {/* Header */}
           <div className="invoice-header">
             <div className="flex justify-between items-start">
@@ -111,22 +111,22 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
                   </h1>
                   {documentType === "invoice" && (
                     <div className="flex justify-start items-center gap-1">
-                      <p className="font-semibold text-[11px] text-[#2A2A2A]">Invoice No :</p>
-                      <p className="font-semibold text-[11px] text-[#389B3C]">{invoiceData.invoiceNumber}</p>
+                      <p className="font-semibold text-[12px] text-[#2A2A2A]">Invoice No :</p>
+                      <p className="font-semibold text-[12px] text-[#389B3C]">{invoiceData.invoiceNumber}</p>
                     </div>
                   )}
                   <div className="flex justify-start items-center gap-1">
-                    <p className="font-semibold text-[11px] text-[#2A2A2A]">SO No :</p>
-                    <p className="font-semibold text-[11px] text-[#389B3C]">{invoiceData.soNumber || invoiceData.invoiceNumber}</p>
+                    <p className="font-semibold text-[12px] text-[#2A2A2A]">SO No :</p>
+                    <p className="font-semibold text-[12px] text-[#389B3C]">{invoiceData.soNumber || invoiceData.invoiceNumber}</p>
                   </div>
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-[11px] font-semibold font-outfit text-[#2A2A2A]">Dezprox LLP - ACP-1336</p>
-                <p className="text-[11px] font-outfit text-[#2A2A2A]">Rasipuram, Namakkal, IN</p>
-                <p className="text-[11px] mt-3 font-outfit text-[#2A2A2A]">+91 8072818574</p>
-                <p className="text-[11px] font-outfit text-[#2A2A2A]">admin@dezprox.com</p>
-                <p className="text-[11px] font-outfit text-[#2A2A2A]">www.dezprox.com</p>
+                <p className="text-[12px] font-semibold font-outfit text-[#2A2A2A]">Dezprox LLP - ACP-1336</p>
+                <p className="text-[12px] font-outfit text-[#2A2A2A]">53, 5/47D, North street, <br />Rasipuram, Namakkal 637 407</p>
+                <p className="text-[12px] mt-3 font-outfit text-[#2A2A2A]">+91 8072818574</p>
+                <p className="text-[12px] font-outfit text-[#2A2A2A]">admin@dezprox.com</p>
+                <p className="text-[12px] font-outfit text-[#2A2A2A]">www.dezprox.com</p>
               </div>
             </div>
           </div>
@@ -134,62 +134,52 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
           {/* From/To Section */}
           <div className="flex justify-between items-start gap-8 invoice-parties mt-2">
             <div>
-              <p className="text-[12px] font-bold text-[#389B3C]">
+              <p className="text-[14px] font-bold text-[#389B3C]">
                 {documentType === "invoice" ? "INVOICE TO" : "QUOTATION TO"}
               </p>
-              <div className="flex justify-start items-center gap-1">
-                <p className="text-[11px] font-bold text-[#2A2A2A]">Name :</p>
-                <p className="text-[11px] font-bold text-[#389B3C]">{invoiceData.clientName}</p>
-              </div>
-              <div className="flex justify-start items-center gap-1">
-                <p className="text-[11px] font-bold text-[#2A2A2A]">Phone no :</p>
-                <p className="text-[11px] font-bold text-[#389B3C]">{invoiceData.clientPhone}</p>
-              </div>
-              <div className="flex justify-start items-center gap-1">
-                <p className="text-[11px] font-bold text-[#2A2A2A]">Email :</p>
-                <p className="text-[11px] font-bold text-[#389B3C]">{invoiceData.clientEmail}</p>
-              </div>
-              <div className="flex justify-start items-center gap-1">
-                <p className="text-[11px] font-bold text-[#2A2A2A]">Address :</p>
-                <p className="text-[11px] font-bold text-[#389B3C]">{invoiceData.clientAddress}</p>
-              </div>
+              <p className="text-[11px] font-medium mt-1 text-[#2A2A2A] whitespace-pre-wrap">
+                {invoiceData.clientDetails}
+              </p>
             </div>
             <div className="text-right flex flex-col gap-2 mt-auto">
               <div>
-                <p className="text-[11px] text-[#2A2A2A]">
+                <p className="text-[12px] font-medium text-[#2A2A2A]">
                   {documentType === "invoice" ? "Invoice Date." : "Quotation Date."}
                 </p>
-                <p className="text-[11px] text-[#5D5D5D]">
+                <p className="text-[12px] text-[#5D5D5D]">
                   {new Date(invoiceData.invoiceDate).toLocaleDateString()}
                 </p>
               </div>
               <div>
-                <p className="text-[11px] text-[#2A2A2A]">Due Date.</p>
-                <p className="text-[11px] text-[#5D5D5D]">
+                <p className="text-[12px] font-medium text-[#2A2A2A]">Due Date.</p>
+                <p className="text-[12px] text-[#5D5D5D]">
                   {new Date(invoiceData.dueDate).toLocaleDateString()}
                 </p>
               </div>
             </div>
           </div>
-   
+
           {/* Items Table + Footer wrapped to occupy full A4 height */}
+          <section
+            style={{ height: 'calc(170mm - 10mm)', minHeight: 'calc(107mm - 10mm)' }}
+          
+          >
           <div
             className="invoice-content flex flex-col"
-            style={{ height: 'calc(228mm - 10mm)', minHeight: 'calc(107mm - 10mm)' }}
           >
             {/* Items Table */}
-            <div className="invoice-table mt-5 flex-1 min-h-0">
-              <table className="w-full text-sm h-full">
+            <div style={{height:'100px'}} className="invoice-table mt-6 flex-1 ">
+              <table  className="w-full text-sm ">
                 <thead>
                   <tr className="bg-[#2A732D] text-white">
-                    <th className="text-center br-2 border border-white py-2">S.No</th>
-                    <th className="text-center br-2 border border-white py-2">Description</th>
-                    <th className="text-center br-2 border border-white py-2 w-16">Qty</th>
-                    <th className="text-center br-2 border border-white py-2 w-24">Rate</th>
-                    <th className="text-center br-2 border border-white py-2 w-32">Amount</th>
+                    <th className="text-center br-2 border border-white py-2 uppercase">S.No</th>
+                    <th className="text-center br-2 border border-white py-2 uppercase">Item Description</th>
+                    <th className="text-center br-2 border border-white py-2 w-16 uppercase">Qty</th>
+                    <th className="text-center br-2 border border-white py-2 w-24 uppercase">Price</th>
+                    <th className="text-center br-2 border border-white py-2 w-32 uppercase">Total</th>
                   </tr>
                 </thead>
-                <tbody className="h-full align-top">
+                <tbody className="h-full align-top ">
                   {(() => {
                     const allItems = invoiceData.layers.flatMap((layer, layerIndex) =>
                       layer.items.map((item, itemIndex) => {
@@ -199,11 +189,6 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
                         return { item, layer, rowIndex };
                       })
                     );
-
-                    const minRows = 5;
-                    const totalRows = Math.max(allItems.length, minRows);
-                    const emptyRowsCount = totalRows - allItems.length;
-
                     return (
                       <>
                         {allItems.map(({ item, layer, rowIndex }) => {
@@ -211,7 +196,7 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
                           return (
                             <tr
                               key={`${layer.id}-${item.id}`}
-                              className={`${isEven ? 'bg-[#FFFFFF]' : 'bg-[#F3FFF3]'}`}
+                              className={`${isEven ? 'bg-[#FFFFFF]' : 'bg-[#F3FFF3] min-h-[35px]  '}`}
                             >
                               <td className="text-center py-2">{rowIndex + 1}</td>
                               <td className="p-3">{item.description}</td>
@@ -221,116 +206,105 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
                             </tr>
                           );
                         })}
-                        {Array.from({ length: emptyRowsCount }).map((_, index) => {
-                          const rowIndex = allItems.length + index;
-                          const isEven = rowIndex % 2 === 0;
-                          return (
-                            <tr
-                              key={`empty-${index}`}
-                              className={`${isEven ? 'bg-[#FFFFFF]' : 'bg-[#F3FFF3]'}`}
-                            >
-                              <td className="text-center py-2">{rowIndex + 1}</td>
-                              <td className="p-3">&nbsp;</td>
-                              <td className="text-center py-2">&nbsp;</td>
-                              <td className="text-center py-2">&nbsp;</td>
-                              <td className="text-center py-2 font-medium">&nbsp;</td>
-                            </tr>
-                          );
-                        })}
+                    
                       </>
                     );
                   })()}
                 </tbody>
               </table>
             </div>
+            <div className="space-y-1 w-40 ml-auto py-5">
+              <div className="flex justify-between items-center gap-5">
+                <span className="text-[13px] font-semibold">Grand Total:</span>
+                <span className="text-[13px] font-semibold text-[#2A2A2A]">
+                  ₹{invoiceData.grandTotal.toLocaleString()}
+                </span>
+              </div>
+              {invoiceData.showDueAmount && (
+                <div className="flex justify-between items-center gap-5">
+                  <span className="text-[13px] font-semibold text-[#FF0000]">Due Amount:</span>
+                  <span className="text-[13px] font-semibold text-[#2A2A2A]">
+                    ₹{invoiceData.dueAmount.toLocaleString()}
+                  </span>
+                </div>
+              )}
+              <hr />
+              {invoiceData.showPaidAmount && (
+                <div className="flex justify-between items-center gap-5">
+                  <span className="text-[14px] font-semibold text-success">Paid Amount:</span>
+                  <span className="text-[14px] font-semibold text-success">
+                    ₹{invoiceData.paidAmount.toLocaleString()}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
 
-            {/* Grand Total */}
-            <div className="invoice-footer mt-auto">
-              <div className="flex justify-between items-start">
-                <div className="space-y-2 mt-auto">
-                  <div className="space-y-1">
-                    <h1 className="text-[11px] tracking-wider font-semibold text-[#2A2A2A] mt-2">Payment Details:</h1>
-                    <div className="flex justify-start items-center gap-1">
-                      <h1 className="text-[11px] text-[#9A9A9A]">Bank Name :</h1>
-                      <p className="text-[11px] text-[#000]">{invoiceData.bankName}</p>
-                    </div>
-                    <div className="flex justify-start items-center gap-1">
-                      <h1 className="text-[11px] text-[#9A9A9A]">Account Name :</h1>
-                      <p className="text-[11px] text-[#000]">{invoiceData.accountName}</p>
-                    </div>
-                    <div className="flex justify-start items-center gap-1">
-                      <h1 className="text-[11px] text-[#9A9A9A]">Account Number:</h1>
-                      <p className="text-[11px] text-[#000]">{invoiceData.accountNumber}</p>
-                    </div>
-                    <div className="flex justify-start items-center gap-1">
-                      <h1 className="text-[11px] text-[#9A9A9A]">IFSC Code:</h1>
-                      <p className="text-[11px] text-[#000]">{invoiceData.ifscCode}</p>
-                    </div>
+          </section>
+
+          {/* Grand Total */}
+          <div className="invoice-footer mt-auto">
+            <div className="flex justify-between items-start">
+              <div className="space-y-2 mt-auto">
+                <div className="s">
+                  <h1 className="text-[12px] tracking-wider font-semibold text-[#2A2A2A] mt-2">Payment Details:</h1>
+                  <div className="flex justify-start items-center gap-1">
+                    <h1 className="text-[11px] text-[#9A9A9A]">Bank Name :</h1>
+                    <p className="text-[11px] text-[#000]">{invoiceData.bankName}</p>
                   </div>
-
-                  <div>
-                    <h1 className="text-[11px] tracking-wider font-semibold text-[#000000]">Notes:</h1>
-                    <p className="text-[11px] text-[#9A9A9A] w-[337px] mt-1" style={{ whiteSpace: 'pre-line' }}>
-                      {invoiceData.notes}
-                    </p>
+                  <div className="flex justify-start items-center gap-1">
+                    <h1 className="text-[11px] text-[#9A9A9A]">Account Name :</h1>
+                    <p className="text-[11px] text-[#000]">{invoiceData.accountName}</p>
+                  </div>
+                  <div className="flex justify-start items-center gap-1">
+                    <h1 className="text-[11px] text-[#9A9A9A]">Account Number:</h1>
+                    <p className="text-[11px] text-[#000]">{invoiceData.accountNumber}</p>
+                  </div>
+                  <div className="flex justify-start items-center gap-1">
+                    <h1 className="text-[11px] text-[#9A9A9A]">IFSC Code:</h1>
+                    <p className="text-[11px] text-[#000]">{invoiceData.ifscCode}</p>
                   </div>
                 </div>
-                <div className="flex flex-col justify-between gap-12">
-                  <div className="space-y-1 w-40">
-                    <div className="flex justify-between items-center gap-5">
-                      <span className="text-[11px] font-semibold">Grand Total:</span>
-                      <span className="text-[11px] font-semibold text-success">
-                        ₹{invoiceData.grandTotal.toLocaleString()}
-                      </span>
-                    </div>
-                    {invoiceData.showDueAmount && (
-                      <div className="flex justify-between items-center gap-5">
-                        <span className="text-[11px] font-semibold text-[#FF0000]">Due Amount:</span>
-                        <span className="text-[11px] font-semibold text-success">
-                          ₹{invoiceData.dueAmount.toLocaleString()}
-                        </span>
+
+                <div>
+                  <h1 className="text-[12px] tracking-wider font-semibold text-[#000000]">Notes:</h1>
+                  <p className="text-[11px] text-[#9A9A9A] w-[337px] mt-1" style={{ whiteSpace: 'pre-line' }}>
+                    {invoiceData.notes}
+                  </p>
+                </div>
+              </div>
+              <div className="flex flex-col justify-between gap-12">
+
+                <div className="justify-end flex text-end flex-col">
+                  {(() => {
+                    const active = (invoiceData.signatures ?? []).find(
+                      (s) => s.name === (invoiceData.selectedSignatureName ?? "")
+                    );
+                    const src = active?.src || (invoiceData.signatureImage || "");
+                    return src ? (
+                      <img
+                        src={src}
+                        alt={active?.name ? `${active.name} signature` : "Signature"}
+                        className="w-20 h-12 ml-auto md:w-32 md:h-auto object-contain"
+                      />
+                    ) : (
+                      <div className="w-20 h-12 md:w-24 md:h-16 border relative -right-20 border-dashed border-gray-300 rounded-md mb-2 flex items-center justify-center">
+                        <span className="text-[11px] text-gray-400">No Signature</span>
                       </div>
-                    )}
-                    <hr />
-                    {invoiceData.showPaidAmount && (
-                      <div className="flex justify-between items-center gap-5">
-                        <span className="text-[11px] font-semibold">Paid Amount:</span>
-                        <span className="text-[11px] font-semibold text-success">
-                          ₹{invoiceData.paidAmount.toLocaleString()}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="justify-end flex text-end flex-col">
-                    {(() => {
-                      const active = (invoiceData.signatures ?? []).find(
-                        (s) => s.name === (invoiceData.selectedSignatureName ?? "")
-                      );
-                      const src = active?.src || (invoiceData.signatureImage || "");
-                      return src ? (
-                        <img
-                          src={src}
-                          alt={active?.name ? `${active.name} signature` : "Signature"}
-                          className="w-20 h-12 ml-auto md:w-32 md:h-auto object-contain"
-                        />
-                      ) : (
-                        <div className="w-20 h-12 md:w-24 md:h-16 border relative -right-20 border-dashed border-gray-300 rounded-md mb-2 flex items-center justify-center">
-                          <span className="text-[11px] text-gray-400">No Signature</span>
-                        </div>
-                      );
-                    })()}
-                    <p className="text-[12px] font-bold">{invoiceData.signatoryName}</p>
-                    <p className="text-[11px] font-semibold">{invoiceData.signatoryRole}</p>
-                  </div>
-                  <div className="justify-end font-semibold text-end text-[12px] flex">
-                    Together, we make  <br />
-                    brands unforgettable !!
-                  </div>
+                    );
+                  })()}
+                  <p className="text-[14px] font-semibold">{invoiceData.signatoryName}</p>
+                  <p className="text-[11px] ">{invoiceData.signatoryRole}</p>
+                </div>
+                <div className="justify-end font-medium text-end text-[14px] flex">
+                  Together, we make  <br />
+                  brands unforgettable !!
                 </div>
               </div>
             </div>
           </div>
-        </Card>
+
+        </div>
       </div>
 
       <style>{`
@@ -359,7 +333,7 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
           
           .invoice-table {
             flex: 1;
-            min-height: 300px;
+           
             display: flex;
             flex-direction: column;
           }
@@ -464,9 +438,9 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
           .invoice-parties { margin-bottom: 8mm; }
           .invoice-table { 
             flex: 1; 
-            min-height: 120mm; 
-            margin-bottom: 8mm; 
+        
             display: flex;
+           
             flex-direction: column;
           }
           .invoice-footer { 

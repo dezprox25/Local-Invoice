@@ -24,10 +24,10 @@ export const ItemsTable = ({ items, onUpdateItem, onDeleteItem }: ItemsTableProp
         <table className="w-full">
           <thead className="bg-[#2A732D]">
             <tr>
-              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium">Description</th>
-              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium w-20">Qty</th>
-              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium w-28">Rate</th>
-              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium w-32">Amount</th>
+              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium uppercase">Item Description</th>
+              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium w-20 uppercase">Qty</th>
+              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium w-28 uppercase">Price</th>
+              <th className="px-4 py-2 br-1 border border-white text-white text-left text-sm font-medium w-32 uppercase">Total</th>
               <th className="px-4 py-2 br-1 border border-white text-white w-12">action</th>
             </tr>
           </thead>
