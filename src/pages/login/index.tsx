@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff } from "lucide-react";
 import { loginWithCredentials } from "@/lib/auth";
-import SplashCursor from '@/components/SplashCursor'
-
+import LightRays from "@/components/LightRays";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -31,11 +30,27 @@ export default function Login() {
 
   return (
     <div className="min-h-screen w-full  bg-gray-300">
-      <SplashCursor />
+
       <div className="relative flex w-full h-screen overflow-hidden bg-white shadow-xl">
         {/* Left Section (Green) */}
-        <div className="relative hidden w-1/2 flex-col items-center justify-center bg-green-700 p-8 text-white lg:flex">
-          <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-br from-green-600 to-green-800 opacity-90"></div>
+
+        <div className="relative hidden w-1/2 flex-col items-center bg-black justify-center b p-8 text-white lg:flex">
+
+          <div className="absolute top-0 w-full h-full">
+            <LightRays
+              raysOrigin="top-center"
+              raysColor="#00ffff"
+              raysSpeed={1.5}
+              lightSpread={1.8}
+              rayLength={3.2}
+              followMouse={true}
+              mouseInfluence={0.1}
+              noiseAmount={0.1}
+              distortion={0.05}
+              className="custom-rays"
+            />
+          </div>
+          <div className="absolute left-0 top-0 h-full w-full opacity-90"></div>
           <div className="relative z-10 text-center">
             {/* Placeholder for logo */}
             <div className="mb-4 flex items-center justify-center">
