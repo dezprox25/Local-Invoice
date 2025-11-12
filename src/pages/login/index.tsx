@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { loginWithCredentials, isAuthenticated } from "@/lib/auth";
+import { Eye, EyeOff } from "lucide-react";
+import { loginWithCredentials } from "@/lib/auth";
+import SplashCursor from '@/components/SplashCursor'
+
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    if (isAuthenticated()) {
-      navigate("/", { replace: true });
-    }
-  }, [navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,26 +29,87 @@ export default function Login() {
     }
   };
 
-  // Email-based login removed; only username/password are supported.
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-sm rounded-md bg-white shadow p-6 space-y-4">
-        <h1 className="text-xl font-semibold text-center">Sign In</h1>
+    <div className="min-h-screen w-full  bg-gray-300">
+      <SplashCursor />
+      <div className="relative flex w-full h-screen overflow-hidden bg-white shadow-xl">
+        {/* Left Section (Green) */}
+        <div className="relative hidden w-1/2 flex-col items-center justify-center bg-green-700 p-8 text-white lg:flex">
+          <div className="absolute left-0 top-0 h-full w-full bg-gradient-to-br from-green-600 to-green-800 opacity-90"></div>
+          <div className="relative z-10 text-center">
+            {/* Placeholder for logo */}
+            <div className="mb-4 flex items-center justify-center">
+              <div className="rounded-full bg-white flex items-center justify-center">
+                <img src="Dezprox white circle logo.png" alt="" className="w-32 h-32" />
+              </div>
+            </div>
+            <h2 className="mb-2 text-3xl font-bold">Dezprox Invoice System!</h2>
+            <p className="mb-6 text-sm opacity-80">
+              Sign in to manage and track your invoices
+            </p>
+          </div>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div className="space-y-1">
-            <Label htmlFor="username">Username</Label>
-            <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter username" />
+        {/* Right Section (White) */}
+        <div className="w-full p-8 lg:w-1/2 flex items-center justify-center">
+          <div className="w-[400px] h-full flex flex-col justify-center">
+            <h1 className="mb-2 text-center text-3xl font-bold text-green-700">welcome</h1>
+            <p className="mb-6 text-center text-sm text-gray-600">
+              Login to your account to continue
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-1">
+                <Label htmlFor="username" className="sr-only">
+                  Email
+                </Label>
+                <Input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                  className="rounded-full border-gray-300 text-center focus:border-green-500 focus:ring-green-500"
+                />
+              </div>
+
+              <div className="space-y-1 relative">
+                <Label htmlFor="password" className="sr-only">
+                  Password
+                </Label>
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  className="rounded-full border-gray-300 text-center pr-10 focus:border-green-500 focus:ring-green-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600 focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-5 w-5" />
+                  ) : (
+                    <Eye className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+
+              {error && (
+                <p className="text-sm text-red-600 text-center">{error}</p>
+              )}
+
+              <Button
+                type="submit"
+                className="w-1/2 mx-auto rounded-full bg-green-600 hover:bg-green-700 block"
+              >
+                LOG IN
+              </Button>
+            </form>
           </div>
-          <div className="space-y-1">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <Button type="submit" className="w-full">Login</Button>
-        </form>
-        {/* Google login removed per requirements */}
+        </div>
       </div>
     </div>
   );
