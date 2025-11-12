@@ -138,20 +138,9 @@ export const InvoiceBuilder = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-card">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">Invoice Builder</h1>
-            <p className="text-sm text-muted-foreground">Layer-by-Layer Method</p>
-          </div>
-          <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              window.location.href = "/login";
-            }}
-            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-          >
-            Logout
-          </button>
+        <div className="container mx-auto px-4 py-4">
+          <h1 className="text-2xl font-bold text-foreground">Invoice Builder</h1>
+          <p className="text-sm text-muted-foreground">Layer-by-Layer Method</p>
         </div>
       </header>
 
