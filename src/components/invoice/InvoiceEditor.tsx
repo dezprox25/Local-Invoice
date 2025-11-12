@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { Plus } from "lucide-react";
@@ -189,6 +190,24 @@ export const InvoiceEditor = ({
               className="text-[10px] text-[#389B3C] font-medium"
             />
           </div>
+        </div>
+      </Card>
+
+      {/* Notes */}
+      <Card className="p-6 bg-card border-none">
+        <h2 className="text-lg font-semibold mb-4 text-[#2A2A2A]">Notes</h2>
+        <div>
+          <Label htmlFor="notes" className="text-[10px] font-bold text-[#2A2A2A]">
+            Notes (shown in preview)
+          </Label>
+          <Textarea
+            id="notes"
+            value={invoiceData.notes || ""}
+            onChange={(e) => handleInputChange("notes", e.target.value)}
+            rows={5}
+            className="text-[10px] text-[#389B3C] font-medium"
+            placeholder="Enter notes..."
+          />
         </div>
       </Card>
 

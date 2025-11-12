@@ -17,7 +17,7 @@ const initialData: InvoiceData = {
   accountName: "Dezprox LLP",
   accountNumber: "1234567890",
   ifscCode: "SBIN0001234",
-  signatoryName: "N R Bharanidharan",
+  signatoryName: "Agnel Joshua Raj",
   signatoryRole: "Authorized Signatory",
   signatureImage: "",
   // Theme signatures: imported via public paths; cache-busted to avoid stale images
@@ -78,6 +78,11 @@ const initialData: InvoiceData = {
   paidAmount: 0,
   showDueAmount: true,
   showPaidAmount: true
+  ,
+  notes: `- Meta Ad service has been successfully completed.
+- Ad spend already paid on client's behalf and included here.
+- Final performance report has been submitted.
+- Kindly make the payment within the due date.`
 };
 
 export const InvoiceBuilder = () => {

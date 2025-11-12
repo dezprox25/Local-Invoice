@@ -109,12 +109,12 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
                   <h1 className="text-3xl font-bold">
                     {documentType === "invoice" ? "INVOICE" : "QUOTATION"}
                   </h1>
-                  <div className="flex justify-start items-center gap-1">
-                    <p className="font-semibold text-[11px] text-[#2A2A2A]">
-                      {documentType === "invoice" ? "Invoice No :" : "Quotation No :"}
-                    </p>
-                    <p className="font-semibold text-[11px] text-[#389B3C]">{invoiceData.invoiceNumber}</p>
-                  </div>
+                  {documentType === "invoice" && (
+                    <div className="flex justify-start items-center gap-1">
+                      <p className="font-semibold text-[11px] text-[#2A2A2A]">Invoice No :</p>
+                      <p className="font-semibold text-[11px] text-[#389B3C]">{invoiceData.invoiceNumber}</p>
+                    </div>
+                  )}
                   <div className="flex justify-start items-center gap-1">
                     <p className="font-semibold text-[11px] text-[#2A2A2A]">SO No :</p>
                     <p className="font-semibold text-[11px] text-[#389B3C]">{invoiceData.soNumber || invoiceData.invoiceNumber}</p>
@@ -122,7 +122,7 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
                 </div>
               </div>
               <div className="text-right">
-                <p className="text-[11px] font-semibold font-outfit text-[#2A2A2A]">Dezprox LLP</p>
+                <p className="text-[11px] font-semibold font-outfit text-[#2A2A2A]">Dezprox LLP - ACP-1336</p>
                 <p className="text-[11px] font-outfit text-[#2A2A2A]">Rasipuram, Namakkal, IN</p>
                 <p className="text-[11px] mt-3 font-outfit text-[#2A2A2A]">+91 8072818574</p>
                 <p className="text-[11px] font-outfit text-[#2A2A2A]">admin@dezprox.com</p>
@@ -270,11 +270,8 @@ export const InvoicePreview = ({ invoiceData }: InvoicePreviewProps) => {
 
                   <div>
                     <h1 className="text-[11px] tracking-wider font-semibold text-[#000000]">Notes:</h1>
-                    <p className="text-[11px] text-[#9A9A9A] w-[237px] mt-1">
-                      - Meta Ad service has been successfully completed. <br />
-                      - Ad spend already paid on client's behalf and included here. <br />
-                      - Final performance report has been submitted. <br />
-                      - Kindly make the payment within the due date.
+                    <p className="text-[11px] text-[#9A9A9A] w-[337px] mt-1" style={{ whiteSpace: 'pre-line' }}>
+                      {invoiceData.notes}
                     </p>
                   </div>
                 </div>

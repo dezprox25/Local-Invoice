@@ -3,14 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  loginWithCredentials,
-  loginWithGoogleEmail,
-  isAuthenticated,
-  DEFAULT_USERNAME,
-  DEFAULT_PASSWORD,
-  ALLOWED_GOOGLE_EMAIL,
-} from "@/lib/auth";
+import { loginWithCredentials, isAuthenticated } from "@/lib/auth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -37,26 +30,13 @@ export default function Login() {
     }
   };
 
-  const handleGoogle = () => {
-    // Placeholder for Google Sign-In. Replace with real OAuth as needed.
-    const email = window.prompt("Enter Google account email");
-    if (!email) return;
-    const ok = loginWithGoogleEmail(email.trim());
-    if (ok) {
-      const to = (location.state as any)?.from?.pathname ?? "/";
-      navigate(to, { replace: true });
-    } else {
-      setError(`Access restricted. Allowed email: ${ALLOWED_GOOGLE_EMAIL}`);
-    }
-  };
+  // Email-based login removed; only username/password are supported.
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-sm rounded-md bg-white shadow p-6 space-y-4">
         <h1 className="text-xl font-semibold text-center">Sign In</h1>
-        <p className="text-xs text-gray-500 text-center">
-          Default credentials: <span className="font-mono">{DEFAULT_USERNAME}</span> / <span className="font-mono">{DEFAULT_PASSWORD}</span>
-        </p>
+
         <form onSubmit={handleSubmit} className="space-y-3">
           <div className="space-y-1">
             <Label htmlFor="username">Username</Label>
@@ -69,12 +49,7 @@ export default function Login() {
           {error && <p className="text-sm text-red-600">{error}</p>}
           <Button type="submit" className="w-full">Login</Button>
         </form>
-        <div className="text-center">
-          <Button type="button" variant="outline" className="w-full" onClick={handleGoogle}>
-            Sign in with Google (restricted)
-          </Button>
-          <p className="text-[11px] text-gray-500 mt-2">Allowed Google email: <span className="font-mono">{ALLOWED_GOOGLE_EMAIL}</span></p>
-        </div>
+        {/* Google login removed per requirements */}
       </div>
     </div>
   );

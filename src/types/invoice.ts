@@ -58,5 +58,7 @@ export interface InvoiceData {
   showDueAmount: boolean;
   /** Control visibility of paid amount in preview */
   showPaidAmount: boolean;
+  /** Free-form notes displayed in preview */
+  notes: string;
   grandTotal: number;
 }

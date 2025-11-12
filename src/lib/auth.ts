@@ -1,6 +1,5 @@
-export const DEFAULT_USERNAME = import.meta.env.VITE_DEFAULT_USERNAME ?? "dezprox";
-export const DEFAULT_PASSWORD = import.meta.env.VITE_DEFAULT_PASSWORD ?? "dezprox@2025";
-export const ALLOWED_GOOGLE_EMAIL = import.meta.env.VITE_ALLOWED_GOOGLE_EMAIL ?? "owner@example.com";
+export const DEFAULT_USERNAME: string | undefined = import.meta.env.VITE_DEFAULT_USERNAME;
+export const DEFAULT_PASSWORD: string | undefined = import.meta.env.VITE_DEFAULT_PASSWORD;
 
 const AUTH_KEY = "auth:isAuthenticated";
 const USER_KEY = "auth:user";
@@ -22,6 +21,13 @@ export function getAuthUser(): string | null {
 }
 
 export function loginWithCredentials(username: string, password: string): boolean {
+  // Guard: require env-provided credentials
+  if (!DEFAULT_USERNAME || !DEFAULT_PASSWORD) {
+    console.warn(
+      "Login blocked: missing VITE_DEFAULT_USERNAME or VITE_DEFAULT_PASSWORD in environment."
+    );
+    return false;
+  }
   if (username === DEFAULT_USERNAME && password === DEFAULT_PASSWORD) {
     try {
       localStorage.setItem(AUTH_KEY, "true");
@@ -32,16 +38,7 @@ export function loginWithCredentials(username: string, password: string): boolea
   return false;
 }
 
-export function loginWithGoogleEmail(email: string): boolean {
-  if (email && email.toLowerCase() === ALLOWED_GOOGLE_EMAIL.toLowerCase()) {
-    try {
-      localStorage.setItem(AUTH_KEY, "true");
-      localStorage.setItem(USER_KEY, email);
-    } catch {}
-    return true;
-  }
-  return false;
-}
+// Note: Email-based login removed per requirements; only username/password are supported.
 
 export function logout(): void {
   try {
