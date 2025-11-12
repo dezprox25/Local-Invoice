@@ -2,6 +2,8 @@ import { useState } from "react";
 import { InvoiceEditor } from "./invoice/InvoiceEditor";
 import { InvoicePreview } from "./invoice/InvoicePreview";
 import { InvoiceData, Layer } from "@/types/invoice";
+  import { logout } from "@/lib/auth";
+import { useNavigate } from "react-router-dom";
 
 const initialData: InvoiceData = {
   invoiceNumber: "INV-2025-01",
@@ -87,6 +89,7 @@ const initialData: InvoiceData = {
 
 export const InvoiceBuilder = () => {
   const [invoiceData, setInvoiceData] = useState<InvoiceData>(initialData);
+  const navigate = useNavigate();
 
   const updateInvoiceData = (newData: Partial<InvoiceData>) => {
     setInvoiceData(prev => ({ ...prev, ...newData }));
@@ -138,9 +141,20 @@ export const InvoiceBuilder = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-card">
-        <div className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-foreground">Invoice Builder</h1>
-          <p className="text-sm text-muted-foreground">Layer-by-Layer Method</p>
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">Invoice Builder</h1>
+            <p className="text-sm text-muted-foreground">Layer-by-Layer Method</p>
+          </div>
+          <button
+            onClick={() => {
+              logout();
+              navigate("/login");
+            }}
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+          >
+            Logout
+          </button>
         </div>
       </header>
 
